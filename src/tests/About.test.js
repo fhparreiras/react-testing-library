@@ -27,4 +27,17 @@ describe('Testes do componente ABOUT', () => {
 
     expect(heading).toBeDefined();
   });
+
+  test('A página deve conter dois parágrafos com texto sobre a Pokédex', () => {
+    renderWithRouter(<About />);
+    // escrever o teste
+  });
+
+  test('A página deve conter uma imagem específica da Pokédex', () => {
+    renderWithRouter(<About />);
+    const imgSource = 'https://cdn2.bulbagarden.net/upload/thumb/8/86/Gen_I_Pok%C3%A9dex.png/800px-Gen_I_Pok%C3%A9dex.png';
+    const imagePokedex = screen.getByRole('img');
+
+    expect(imagePokedex).toHaveAttribute('src', imgSource);
+  });
 });
