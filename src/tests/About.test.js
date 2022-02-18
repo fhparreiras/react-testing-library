@@ -5,7 +5,7 @@ import About from '../components/About';
 import renderWithRouter from '../renderWithRouter';
 
 describe('Testes do componente ABOUT', () => {
-  test('a página deve conter as informações sobre a Pokédex', () => {
+  test('A página deve conter as informações sobre a Pokédex', () => {
     renderWithRouter(<About />);
     const arrayTextA = ['This application simulates a Pokédex',
       ' a digital encyclopedia containing all Pokémons'];
@@ -20,5 +20,12 @@ describe('Testes do componente ABOUT', () => {
 
     expect(paragraphOne).toBeVisible();
     expect(paragraphTwo).toBeVisible();
+  });
+
+  test('A página deve conter um heading h2 com o texto "About Pokédex" ', () => {
+    renderWithRouter(<About />);
+    const heading = screen.getByRole('heading', { name: /about pokédex/i, level: 2 });
+
+    expect(heading).toBeDefined();
   });
 });
