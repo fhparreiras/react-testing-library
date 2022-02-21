@@ -20,4 +20,14 @@ describe('Testes do componente POKEMON', () => {
     expect(imagePikachu).toHaveAttribute('src', imgSource);
     expect(imagePikachu).toHaveAttribute('alt', 'Pikachu sprite');
   });
+
+  test('O card precisa ter o link "more details" e a URL /pokemons/<id>', () => {
+    const { history } = renderWithRouter(<App />);
+    const detailsBtn = screen.getByRole('link', { name: /more details/i });
+    expect(detailsBtn).toBeInTheDocument();
+
+    userEvent.click(detailsBtn);
+    const { location: { pathname } } = history;
+    expect(pathname).toBe('/pokemons/25');
+  });
 });
