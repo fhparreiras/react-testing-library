@@ -31,4 +31,21 @@ describe('Testes do componente POKEDEX', () => {
     const pikachuText = screen.getByText(/pikachu/i);
     expect(pikachuText).toBeDefined();
   });
+
+  test('É mostrado apenas um Pokémon por vez', () => {
+    renderWithRouter(<App />);
+    const detailsBtn = screen.getAllByRole('link', { name: /more details/i });
+    expect(detailsBtn).toHaveLength(1);
+  });
+
+  test('A página deve conter os botões de filtro', () => {
+    renderWithRouter(<App />);
+    const btnArray = ['All', 'Electric', 'Fire', 'Bug',
+      'Poison', 'Psychic', 'Normal', 'Dragon'];
+
+    btnArray.forEach((btn) => {
+      const filterBtn = screen.getByRole('button', { name: btn });
+      expect(filterBtn).toBeDefined();
+    });
+  });
 });
