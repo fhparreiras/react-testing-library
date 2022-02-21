@@ -25,9 +25,18 @@ describe('Testes do componente POKEMON', () => {
     const { history } = renderWithRouter(<App />);
     const detailsBtn = screen.getByRole('link', { name: /more details/i });
     expect(detailsBtn).toBeInTheDocument();
+    expect(detailsBtn).toHaveAttribute('href', '/pokemons/25');
 
     userEvent.click(detailsBtn);
+    const heading = screen.getByRole('heading', { name: /pikachu details/i });
     const { location: { pathname } } = history;
     expect(pathname).toBe('/pokemons/25');
+    expect(heading).toBeDefined();
+
+    const favoriteCheck = screen.getByRole('checkbox');
+    userEvent.click(favoriteCheck);
+    const favImg = screen.getByRole('img', { name: /pikachu is marked as favorite/i });
+    const favImgSource = '/star-icon.svg';
+    expect(favImg).toHaveAttribute('src', favImgSource);
   });
 });
