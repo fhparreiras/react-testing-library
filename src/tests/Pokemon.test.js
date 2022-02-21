@@ -8,14 +8,15 @@ describe('Testes do componente POKEMON', () => {
   test('O card do pokémon deve ser renderizado corretamente ', () => {
     renderWithRouter(<App />);
     const pikachuText = screen.getByText(/pikachu/i);
-    const pikachuType = screen.getAllByText(/electric/i);
+    const pikachuType = screen.getByTestId('pokemon-type');
     const value = '6.0';
     const measurementUnit = 'kg';
     const pikachuInfo = `Average weight: ${value} ${measurementUnit}`;
     const imgSource = 'https://cdn2.bulbagarden.net/upload/b/b2/Spr_5b_025_m.png';
     const imagePikachu = screen.getByRole('img', { name: /pikachu sprite/i });
     expect(pikachuText).toBeDefined();
-    expect(pikachuType[0]).toBeDefined();
+    expect(pikachuType).toBeDefined();
+    expect(pikachuType).toHaveTextContent('Electric');
     expect(pikachuInfo).toBeDefined();
     expect(imagePikachu).toHaveAttribute('src', imgSource);
     expect(imagePikachu).toHaveAttribute('alt', 'Pikachu sprite');
@@ -38,5 +39,6 @@ describe('Testes do componente POKEMON', () => {
     const favImg = screen.getByRole('img', { name: /pikachu is marked as favorite/i });
     const favImgSource = '/star-icon.svg';
     expect(favImg).toHaveAttribute('src', favImgSource);
+    expect(favImg).toHaveAttribute('alt', 'Pikachu is marked as favorite');
   });
 });
