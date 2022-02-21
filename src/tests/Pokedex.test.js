@@ -1,7 +1,6 @@
 import React from 'react';
-import { getByRole, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import filterPokemons from '../components/Pokedex';
 import App from '../App';
 import renderWithRouter from '../renderWithRouter';
 
