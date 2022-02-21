@@ -1,6 +1,7 @@
 import React from 'react';
 import { getByRole, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import filterPokemons from '../components/Pokedex';
 import App from '../App';
 import renderWithRouter from '../renderWithRouter';
 
@@ -40,12 +41,43 @@ describe('Testes do componente POKEDEX', () => {
 
   test('A página deve conter os botões de filtro', () => {
     renderWithRouter(<App />);
-    const btnArray = ['All', 'Electric', 'Fire', 'Bug',
+    const btnArray = ['Electric', 'Fire', 'Bug',
       'Poison', 'Psychic', 'Normal', 'Dragon'];
 
-    btnArray.forEach((btn) => {
+    btnArray.forEach((btn, index) => {
       const filterBtn = screen.getByRole('button', { name: btn });
       expect(filterBtn).toBeDefined();
+      const dataIdTest = screen.getAllByTestId('pokemon-type-button')[index];
+      expect(dataIdTest).toBeInTheDocument();
     });
+
+    const btnPoison = screen.getByRole('button', { name: /poison/i });
+    userEvent.click(btnPoison);
+    const ekansText = screen.getByText(/ekans/i);
+    expect(ekansText).toBeDefined();
+
+    const btnPsychic = screen.getByRole('button', { name: /psychic/i });
+    userEvent.click(btnPsychic);
+    const psychicText = screen.getAllByText(/psychic/i);
+    expect(psychicText[0]).toBeDefined();
+    const btnNext = screen.getByRole('button', { name: /próximo pokémon/i });
+    userEvent.click(btnNext);
+    expect(psychicText[0]).toBeDefined();
+  });
+
+  test('A Pokédex deve conter um botão que reseta o filtro', () => {
+    renderWithRouter(<App />);
+    // expect(filterPokemons).toHaveBeenCalledWith('all');
+    const resetBtn = screen.getByRole('button', { name: /all/i });
+    expect(resetBtn).toBeVisible();
+
+    const btnNext = screen.getByRole('button', { name: /próximo pokémon/i });
+    const pikachuText = screen.getByText(/pikachu/i);
+    expect(pikachuText).toBeDefined();
+    userEvent.click(btnNext);
+    const charmanderText = screen.getByText(/charmander/i);
+    expect(charmanderText).toBeDefined();
+    userEvent.click(resetBtn);
+    expect(resetBtn).toBeInTheDocument();
   });
 });
