@@ -20,4 +20,18 @@ describe('Testes do componente POKEMONDETAILS', () => {
     const detailsSection = screen.getByText(detailsText);
     expect(detailsSection).toBeInTheDocument();
   });
+
+  test('Deve existir uma seção com os mapas de localizações do pokémon', () => {
+    const { history } = renderWithRouter(<App />);
+    history.push('/pokemons/25');
+    const locationsHeading = screen.getByRole('heading',
+      { name: /game locations of pikachu/i, level: 2 });
+    const mapImages = screen.getAllByRole('img', { name: /pikachu location/i });
+    const locationNameOne = screen.getByText(/kanto viridian forest/i);
+    const locationNameTwo = screen.getByText(/kanto power plant/i);
+    expect(mapImages).toBeDefined();
+    expect(locationsHeading).toBeDefined();
+    expect(locationNameOne).toBeVisible();
+    expect(locationNameTwo).toBeVisible();
+  });
 });
